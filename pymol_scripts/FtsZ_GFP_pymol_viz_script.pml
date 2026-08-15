@@ -11,16 +11,12 @@
 # 1. Load the AlphaFold PDB file
 # ------------------------------------------------------------
 
-load "/home/andrew/Documents/Basic-cheminformatics-analysis/alphafold2_output/test_9611b_unrelaxed_rank_001_alphafold2_ptm_model_3_seed_000.pdb", fusion
+load "C:\Users\Andrew\Documents\Learning coding notes\my_work_dir\Cheminformatics-pymol-molecular-viz\alphafold2_output\test_9611b_unrelaxed_rank_001_alphafold2_ptm_model_3_seed_000.pdb", fusion
 
 # Clean up the initial display
 hide everything, fusion
 show cartoon, fusion
 bg_color white
-
-# Optional: improve cartoon appearance
-set cartoon_fancy_helices, 1
-set cartoon_smooth_loops, 1
 
 
 # ------------------------------------------------------------
@@ -36,7 +32,7 @@ set cartoon_smooth_loops, 1
 # GFP    = residues 400-638
 
 select ftsz, fusion and resi 1-390
-select linker, fusion and resi 391-394
+select linker, fusion and resi 391-399
 select gfp, fusion and resi 400-643
 
 
@@ -50,10 +46,6 @@ color green, gfp
 
 # Make the linker slightly easier to see
 show sticks, linker
-
-# Show whole protein
-orient fusion
-
 
 # ------------------------------------------------------------
 # 4. Highlight the FtsZ-GFP interface
@@ -93,11 +85,11 @@ set dash_gap, 0.3
 
 
 # ------------------------------------------------------------
-# 7. Zoom to the interface
+# 7. Zoom to fusion
 # ------------------------------------------------------------
 
-zoom ftsz_interface or gfp_interface, 8
-
+orient fusion
+zoom fusion, 5
 
 # ------------------------------------------------------------
 # 8. Optional: label interface residues
@@ -109,7 +101,30 @@ zoom ftsz_interface or gfp_interface, 8
 
 
 # ------------------------------------------------------------
-# 9. Optional: save a PyMOL session
+# Final rendering settings
 # ------------------------------------------------------------
 
-save FtsZ_GFP_analysis.pses
+set antialias, 2
+set depth_cue, 0
+
+set specular, 0.2
+set shininess, 10
+set ambient, 0.4
+set direct, 0.6
+
+# Black outline
+set ray_trace_mode, 1
+set ray_trace_color, black
+
+# Stronger outline
+set ray_trace_gain, 0.5
+set ray_trace_disco_factor, 1.0
+
+# save session AFTER rendering
+save FtsZ_GFP_analysis.pse
+
+# RENDER FINAL SCENE
+ray 2400, 1800
+
+# Then save the ray-traced image
+png ftsz_gfp.png, dpi=300
